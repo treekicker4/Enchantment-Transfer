@@ -96,7 +96,12 @@ public class AnvilEvents {
                     event.setCost(EnchantmentTransferConfig.fixed_value.get());
                 }
             } else {
-                event.setCost((int)Math.round(i * EnchantmentTransferConfig.factor_value.get()));
+                double factor_value = EnchantmentTransferConfig.factor_value.get();
+                if (factor_value > 0.0) {
+                    event.setCost((int) Math.round(i * factor_value));
+                } else {
+                    event.setCost(1);
+                }
             }
 
             event.setOutput(finalBook);

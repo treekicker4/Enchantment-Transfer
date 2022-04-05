@@ -16,7 +16,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.0.2-1.18.2'
+version = '0.0.3-1.18.2'
 group = 'com.treekicker4.enchantmenttransfer' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'enchantmenttransfer'
 
@@ -152,7 +152,7 @@ jar {
         attributes([
                 "Specification-Title"     : "enchantmenttransfer",
                 "Specification-Vendor"    : "enchantmenttransfersareus",
-                "Specification-Version"   : "0.0.2", // We are version 1 of ourselves
+                "Specification-Version"   : "0.0.3", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "enchantmenttransfersareus",
