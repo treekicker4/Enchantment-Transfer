@@ -19,7 +19,7 @@ modId="enchantmenttransfer" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
-version="0.0.3" #mandatory
+version="0.0.5" #mandatory
  # A display name for the mod
 displayName="Enchantment Transfer" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
@@ -37,6 +37,9 @@ description='''
 Transfer enchantments from any item to a book! This mod emulates vanilla calculations to provide a fair XP requirement.
 0.0.2 - The config is here! Find the enchantmenttransfer-common.toml file to set a fixed amount of XP or to set a factor for the default
 amount to be multipliied by!
+0.0.3 - 1.18.2 support is here!
+0.0.4 - Added an enchantment limit to the config! Set a limit to how many enchantments can be taken off of an item.
+0.0.5 - Added 1.19 support AND "Should Return" to the config! You can now decide whether or not the player should get the original item back from the anvil!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.enchantmenttransfer]] #optional
@@ -55,6 +58,6 @@ amount to be multipliied by!
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.18.2,1.19)"
+    versionRange="[1.18.1,1.20)"
     ordering="NONE"
     side="BOTH"

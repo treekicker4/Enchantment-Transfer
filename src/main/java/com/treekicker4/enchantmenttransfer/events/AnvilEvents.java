@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = EnchantmentTransfer.MOD_ID)
@@ -21,30 +22,46 @@ public class AnvilEvents {
         int i;
         if (event.getLeft().isEnchanted() && event.getRight().getItem() == Items.BOOK && event.getRight().getCount() == 1) {
         //if (event.getRight().isEnchanted() && event.getLeft().getItem() == Items.BOOK) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(event.getLeft());
+            Map<Enchantment, Integer> raw_enchantments = EnchantmentHelper.getEnchantments(event.getLeft());
+            Map<Enchantment, Integer> enchantments = new HashMap<>();
+            int count = 0;
+            for (Map.Entry<Enchantment, Integer> set : raw_enchantments.entrySet()) {
+                if (count >= EnchantmentTransferConfig.limit_value.get()) {
+                    break;
+                }
+                Enchantment enchantment = set.getKey();
+                enchantments.put(enchantment, set.getValue());
+                count++;
+            }
             ItemStack finalBook = new ItemStack(Items.ENCHANTED_BOOK);
             for (Map.Entry<Enchantment, Integer> set : enchantments.entrySet()) {
+                if (count >= EnchantmentTransferConfig.limit_value.get()) {
+                    break;
+                }
                 Enchantment enchantment = set.getKey();
                 EnchantedBookItem.addEnchantment(finalBook, new EnchantmentInstance(enchantment, set.getValue()));
+                count++;
             }
             EnchantmentHelper.setEnchantments(enchantments, finalBook);
             //event.setOutput(finalBook);
             ItemStack itemstack = event.getLeft();
             event.setCost(1);
             i = 0;
-            int j = 0;
             ItemStack itemstack1 = itemstack.copy();
             ItemStack itemstack2 = event.getRight().copy();
-            Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(itemstack1);
+            Map<Enchantment, Integer> map = enchantments;
             EnchantmentHelper.setEnchantments(map, itemstack2);
             boolean flag = true;
-
             if (!itemstack2.isEmpty()) {
                 //flag = itemstack2.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(itemstack2).isEmpty();
-                Map<Enchantment, Integer> map1 = EnchantmentHelper.getEnchantments(itemstack1);
-
+                Map<Enchantment, Integer> map1 = enchantments;
+                count = 0;
                 for (Enchantment enchantment1 : map1.keySet()) {
                     if (enchantment1 != null) {
+                        if (count >= EnchantmentTransferConfig.limit_value.get()) {
+                            break;
+                        }
+                        count++;
                         int i2 = map.getOrDefault(enchantment1, 0);
                         int j2 = map1.get(enchantment1);
                         j2 = i2 == j2 ? j2 + 1 : Math.max(j2, i2);
@@ -110,12 +127,14 @@ public class AnvilEvents {
     @SubscribeEvent
     public static void giveItemBack(AnvilRepairEvent event) {
         if (event.getItemInput().isEnchanted() && event.getIngredientInput().getItem() == Items.BOOK) {
-            ItemStack disenchanted = event.getItemInput().copy();
-            EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getIngredientInput()),disenchanted);
-            if (EnchantmentTransferConfig.fixed_value.get() == 0) {
-                event.getPlayer().giveExperienceLevels(1);
+            if (EnchantmentTransferConfig.return_value.get() != 0) {
+                ItemStack disenchanted = event.getItemInput().copy();
+                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getIngredientInput()), disenchanted);
+                if (EnchantmentTransferConfig.fixed_value.get() == 0) {
+                    event.getPlayer().giveExperienceLevels(1);
+                }
+                event.getPlayer().getInventory().add(disenchanted);
             }
-            event.getPlayer().getInventory().add(disenchanted);
         }
     }
 }
