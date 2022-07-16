@@ -126,14 +126,14 @@ public class AnvilEvents {
     }
     @SubscribeEvent
     public static void giveItemBack(AnvilRepairEvent event) {
-        if (event.getItemInput().isEnchanted() && event.getIngredientInput().getItem() == Items.BOOK) {
+        if (event.getLeft().isEnchanted() && event.getRight().getItem() == Items.BOOK) {
             if (EnchantmentTransferConfig.return_value.get() != 0) {
-                ItemStack disenchanted = event.getItemInput().copy();
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getIngredientInput()), disenchanted);
+                ItemStack disenchanted = event.getLeft().copy();
+                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getRight()), disenchanted);
                 if (EnchantmentTransferConfig.fixed_value.get() == 0) {
-                    event.getPlayer().giveExperienceLevels(1);
+                    event.getEntity().giveExperienceLevels(1);
                 }
-                event.getPlayer().getInventory().add(disenchanted);
+                event.getEntity().getInventory().add(disenchanted);
             }
         }
     }
