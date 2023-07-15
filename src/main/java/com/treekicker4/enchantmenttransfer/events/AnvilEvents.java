@@ -15,13 +15,13 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = EnchantmentTransfer.MOD_ID)
+@Mod.EventBusSubscriber(modid = EnchantmentTransfer.MODID)
 public class AnvilEvents {
     @SubscribeEvent
     public static void giveEnchantedBook(AnvilUpdateEvent event) {
         int i;
         if (event.getLeft().isEnchanted() && event.getRight().getItem() == Items.BOOK && event.getRight().getCount() == 1) {
-        //if (event.getRight().isEnchanted() && event.getLeft().getItem() == Items.BOOK) {
+            //if (event.getRight().isEnchanted() && event.getLeft().getItem() == Items.BOOK) {
             Map<Enchantment, Integer> raw_enchantments = EnchantmentHelper.getEnchantments(event.getLeft());
             Map<Enchantment, Integer> enchantments = new HashMap<>();
             int count = 0;
