@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "enchantment-transfer",
+	"version": "${version}",
+	"name": "Enchantment Transfer",
+	"description": "Transfer enchantments from any item to a book! This mod emulates vanilla calculations to provide a fair XP requirement.",
+	"authors": [
+		"Keni (treekicker4)",
+		"Mario"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/enchantment-transfer",
+		"sources": "https://github.com/treekicker4/Enchantment-Transfer"
+	},
+	"license": "AGPL-3.0-only",
+	"icon": "assets/enchantment-transfer/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.treekicker4.enchantmenttransfer.EnchantmentTransfer"
+		]
+	},
+	"mixins": [
+		"enchantment-transfer.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20",
+		"java": ">=17"
+	}
+}

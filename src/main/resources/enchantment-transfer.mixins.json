@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.treekicker4.enchantmenttransfer.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"AnvilLogicModifier"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
